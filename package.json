@@ -1,7 +1,7 @@
 {
   "name": "atom-vue-component-loader",
   "description": "loads a pack of vue components",
-  "version": "0.0.1",
+  "version": "0.0.2",
   "homepage": "https://github.com/paulpflug/",
   "author": {
     "name": "Paul Pflugradt",
@@ -16,7 +16,7 @@
   },
   "main": "lib/index.js",
   "dependencies": {
-    "simple-reload": "0.0.1",
+    "simple-reload": "0.0.2",
     "insert-css": "^0.2.0",
     "vue": "git+https://git@github.com/yyx990803/vue.git#csp"
   },
