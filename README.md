@@ -16,7 +16,7 @@ returns a `Function(names, options={})`
 
 | Parameter | Type    | Usage                                   |
 | --------: | ------- | :-------------------------------------- |
-| names     | array   | name of the package you want to reload  |
+| names     | array   | name of the package you want to reload (will be converted to kebab case) |
 | options   | object  | object containing all options |
 
 | options   | Type    | Usage                                   |
@@ -28,13 +28,14 @@ returns a `Function(names, options={})`
 ## Example
 ```coffee
 loader = require "atom-vue-component-loader"
-components = loader ["nestedComp","mainApp"], reload: true
-components.mainApp # reference to vue component
+components = loader ["nested-comp","main-app"], reload: true
+components["main-app"] # reference to vue component
 ```
 
 
 
 ## Release History
+ - *v0.0.3*: Switched to kebab case
  - *v0.0.2*: First bugfix
  - *v0.0.1*: First release
 

@@ -1,8 +1,15 @@
+# out: ../lib/index.js
+
 path = require "path"
 fs = require "fs"
 Vue = require "vue"
 simpleReload = require "simple-reload"
 components = {}
+
+decamelize = (str) ->
+  str.replace /\B([A-Z]{1})/g, (match, chr) ->
+    "-#{chr.toLowerCase()}"
+
 camelize = (str) ->
   str.replace /-+(.)?/g, (match, chr) ->
     if chr
@@ -22,6 +29,7 @@ module.exports = (names, options={}) ->
   deep = options.deep ? false
   components = {} if reload
   for name in names
+    name = decamelize(name)
     try
       fullname =  require.resolve("#{name}")
     catch
