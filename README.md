@@ -12,11 +12,11 @@ npm install atom-vue-component-loader
 ## Usage
 requiring `atom-vue-component-loader`
 
-returns a `Function(names, options={})`
+returns a `Function(tree, options={})`
 
 | Parameter | Type    | Usage                                   |
 | --------: | ------- | :-------------------------------------- |
-| names     | array   | name of the package you want to reload (will be converted to kebab case) |
+| names     | array   | dependency tree of your components |
 | options   | object  | object containing all options |
 
 | options   | Type    | Usage                                   |
@@ -28,13 +28,24 @@ returns a `Function(names, options={})`
 ## Example
 ```coffee
 loader = require "atom-vue-component-loader"
-components = loader ["nested-comp","main-app"], reload: true
-components["main-app"] # reference to vue component
+
+tree =
+  "main-app":
+    "nested-comp": null
+  "app2":
+    "another-comp": null
+
+vueApps = loader tree, reload: true
+vueApps["main-app"] # reference to vue apps
+vueApps["app2"]
+vueApps["nested-comp"] # will not work!
+
 ```
 
 
 
 ## Release History
+ - *v0.0.4*: introduced the dependency tree
  - *v0.0.3*: Switched to kebab case
  - *v0.0.2*: First bugfix
  - *v0.0.1*: First release

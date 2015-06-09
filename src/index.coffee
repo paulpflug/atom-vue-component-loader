@@ -4,7 +4,7 @@ path = require "path"
 fs = require "fs"
 Vue = require "vue"
 simpleReload = require "simple-reload"
-components = {}
+
 
 decamelize = (str) ->
   str.replace /\B([A-Z]{1})/g, (match, chr) ->
@@ -17,23 +17,42 @@ camelize = (str) ->
     else
       ""
 
-module.exports = (names, options={}) ->
-  cwd = options.cwd ? "./"
-  if cwd[0] == '.'
+registry = {}
+getByName = (name, options) ->
+  return registry[name] if registry[name]?
+  try
+    fullname =  require.resolve("#{name}")
+  catch
+    fullname = require.resolve("#{options.cwd}/#{name}")
+  if options.reload
+    registry[name] = simpleReload(fullname, options.deep)
+  else
+    registry[name] = require(fullname)
+
+getComponents = (dependencyTree, options) ->
+  components = {}
+  for componentName, children of dependencyTree
+    componentName = decamelize componentName
+    component = getByName componentName, options
+    components[componentName] = component
+    if children?
+      component.components = getComponents children, options
+  return components
+
+vues = {}
+module.exports = (dependencyTree, options={}) ->
+  options.cwd ?= "./"
+  if options.cwd[0] == '.'
     dirname = module.parent.filename
     stat = fs.statSync dirname
     if stat.isFile()
       dirname = path.dirname dirname
-    cwd = path.resolve dirname, cwd
-  reload = options.reload ? false
-  deep = options.deep ? false
-  components = {} if reload
-  for name in names
-    name = decamelize(name)
-    try
-      fullname =  require.resolve("#{name}")
-    catch
-      fullname = require.resolve("#{cwd}/#{name}")
-    loaded = if reload then simpleReload(fullname, deep) else require(fullname)
-    components[camelize(name)] ?= new Vue(loaded)
-  return components
+    options.cwd = path.resolve dirname, options.cwd
+  options.reload ?= false
+  options.deep ?= false
+  if options.reload
+    vues = {}
+    registry = {}
+  for vueName,vue of getComponents(dependencyTree, options)
+    vues[vueName] ?= new Vue(vue)
+  return vues
