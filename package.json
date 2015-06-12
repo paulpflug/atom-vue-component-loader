@@ -1,7 +1,7 @@
 {
   "name": "atom-vue-component-loader",
   "description": "loads a pack of vue components",
-  "version": "0.0.4",
+  "version": "0.0.5",
   "homepage": "https://github.com/paulpflug/",
   "author": {
     "name": "Paul Pflugradt",

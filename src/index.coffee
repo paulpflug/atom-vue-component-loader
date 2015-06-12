@@ -43,6 +43,7 @@ vues = {}
 module.exports = (dependencyTree, options={}) ->
   options.cwd ?= "./"
   if options.cwd[0] == '.'
+    console.log module.parent
     dirname = module.parent.filename
     stat = fs.statSync dirname
     if stat.isFile()
@@ -50,6 +51,8 @@ module.exports = (dependencyTree, options={}) ->
     options.cwd = path.resolve dirname, options.cwd
   options.reload ?= false
   options.deep ?= false
+  options.debug ?= false
+  Vue.config.debug = options.debug
   if options.reload
     vues = {}
     registry = {}

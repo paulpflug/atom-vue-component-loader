@@ -24,6 +24,7 @@ returns a `Function(tree, options={})`
 | cwd       | string  | current working directory - where packages will be searched |
 | reload    | boolean | if set, deletes cache before loading    |
 | deep      | boolean | only if reload is true, deletes nested dependencies from cache |
+| debug     | boolean | sets `Vue.options.debug` |
 
 ## Example
 ```coffee
