@@ -46,6 +46,7 @@ vueApps["nested-comp"] # will not work!
 
 
 ## Release History
+ - *v0.0.5*: added debug option
  - *v0.0.4*: introduced the dependency tree
  - *v0.0.3*: Switched to kebab case
  - *v0.0.2*: First bugfix

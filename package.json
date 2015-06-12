@@ -16,7 +16,7 @@
   },
   "main": "lib/index.js",
   "dependencies": {
-    "simple-reload": "0.0.2",
+    "simple-reload": "0.0.4",
     "insert-css": "^0.2.0",
     "vue": "git+https://git@github.com/yyx990803/vue.git#csp"
   },
